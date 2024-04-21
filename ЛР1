@@ -1,0 +1,477 @@
+def task1():
+    print("Решение задачи 1")
+# 1_1. Найти сумму простых делителей числа
+def prime_factors_sum(n):
+    # Функция для нахождения всех простых делителей числа n и их суммы
+    prime_sum = 0
+    divisor = 2
+    while n > 1:
+        while n % divisor == 0:
+            prime_sum += divisor
+            n //= divisor
+        divisor += 1
+    return prime_sum
+
+# 1_2. Найти количество нечетных цифр числа, больших 3
+def count_odd_digits_greater_than_3(number):
+    count = 0
+    while number > 0:
+        digit = number % 10
+        if digit > 3 and digit % 2 != 0:
+            count += 1
+        number //= 10
+    return count
+
+# 1_3. Найти произведение таких делителей числа, сумма цифр которых меньше, чем сумма цифр исходного числа
+def sum_of_digits(n):
+    # Функция для нахождения суммы цифр числа
+    return sum(int(digit) for digit in str(n))
+
+def product_of_divisors_less_than_original(n):
+    # Функция для нахождения произведения делителей числа,
+    # сумма цифр которых меньше, чем сумма цифр исходного числа
+    original_sum = sum_of_digits(n)
+    product = 1
+    for i in range(1, n + 1):
+        if n % i == 0:
+            if sum_of_digits(i) < original_sum:
+                product *= i
+    return product
+
+
+def task2():
+    print("Решение задачи 2")
+# 2_1. Дана строка. Необходимо найти общее количество русских символов
+def count_russian_chars(input_text):
+    # Функция для подсчёта русских символов в строке
+    russian_chars = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+    russian_chars += russian_chars.upper()  # Добавляем заглавные буквы
+    count = 0
+    for char in input_text:
+        if char in russian_chars:
+            count += 1
+    return count
+
+def task3():
+    print("Решение задачи 3")
+# 2_9. Дана строка. Необходимо проверить образуют ли строчные символы латиницы палиндром
+def is_palindrome(text):
+    # Функция для проверки, является ли строка палиндромом
+    clean_text = ''.join(char for char in text if char.isalnum()).lower()
+    return clean_text == clean_text[::-1]
+
+def task4():
+    print("Решение задачи 4")
+# 2_18: Найти в тексте даты формата «день.месяц.год».
+import re
+def find_dates(text):
+    # Функция для поиска дат формата "день.месяц.год" в тексте
+    pattern = r'\b\d{1,2}\.\d{1,2}\.\d{4}\b'
+    dates = re.findall(pattern, text)
+    return dates
+
+def task5():
+    print("Решение задачи 5")
+# 1. Дана строка. Необходимо найти все даты, которые описаны в виде "31 февраля 2007"
+import re
+def find_custom_dates(text):
+    # Функция для поиска дат в виде "31 февраля 2007" в тексте
+    pattern = r'\b\d{1,2}\s(?:январ[я|ь]|феврал[я|ь]|март[а]?|апрел[я|ь]|мая?|июн[я|ь]|июл[я|ь]|август[а]?|сентябр[я|ь]|октябр[я|ь]|ноябр[я|ь]|декабр[я|ь])\s\d{4}\b'
+    dates = re.findall(pattern, text)
+    return dates
+
+def task6():
+    print("Решение задачи 6")
+# 9. Дана строка. Необходимо найти максимальное из имеющихся в ней вещественных чисел
+import re
+def find_max_float(text):
+    # Функция для поиска максимального вещественного числа в строке
+    floats = re.findall(r'\b\d+\.\d+\b', text)
+    if floats:
+        max_float = max(map(float, floats))
+        return max_float
+    else:
+        return None
+
+def task7():
+    print("Решение задачи 7")
+# 7. Дана строка. Необходимо найти минимальное из имеющихся в ней рациональных чисел
+import re
+def find_min_rational(text):
+    # Функция для поиска минимального рационального числа в строке
+    rational_numbers = re.findall(r'[-+]?\d+/\d+|[-+]?\d+\.\d+|[-+]?\d+', text)
+    if rational_numbers:
+        min_rational = min(map(convert_to_float, rational_numbers))
+        return min_rational
+    else:
+        return None
+
+def convert_to_float(number_str):
+    # Функция для конвертации строки числа во float
+    if '/' in number_str:
+        numerator, denominator = map(int, number_str.split('/'))
+        return numerator / denominator
+    else:
+        return float(number_str)
+
+def task8():
+    print("Решение задачи 8")
+# 18. Дана строка. Необходимо найти наибольшее количество идущих подряд цифр
+import re
+def max_consecutive_digits(text):
+    # Функция для нахождения наибольшего количества идущих подряд цифр в строке
+    matches = re.findall(r'\d+', text)
+    if matches:
+        max_count = max(len(match) for match in matches)
+        return max_count
+    else:
+        return 0
+
+def task9():
+    print("Решение задачи 9")
+# 9. Прочитать список строк с клавиатуры. Упорядочить по длине строки
+def sort_by_length(strings):
+    # Функция для упорядочивания списка строк по длине строки
+    return sorted(strings, key=len)
+
+def task10():
+    print("Решение задачи 10")
+# 10. Дан список строк с клавиатуры. Упорядочить по количеству слов в строке
+def sort_by_word_count(strings):
+    # Функция для упорядочивания списка строк по количеству слов в строке
+    return sorted(strings, key=lambda x: len(x.split()))
+
+def task11():
+    print("Решение задачи 11")
+# 11_1. В порядке увеличения разницы между количеством согласных и количеством гласных букв в строке.
+def count_vowels_consonants(string):
+    # Функция для подсчета количества гласных и согласных букв в строке
+    vowels = set("aeiouAEIOU")
+    consonants = set("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ")
+    vowel_count = sum(1 for char in string if char in vowels)
+    consonant_count = sum(1 for char in string if char in consonants)
+    return consonant_count - vowel_count
+
+def task12():
+    print("Решение задачи 12")
+# 11_4. В порядке увеличения квадратичного отклонения среднего веса ASCII-кода символа строки от среднего веса ASCII-кода символа первой строки
+def average_weight(string):
+    # Функция для вычисления среднего веса ASCII-кода символов в строке
+    return sum(ord(char) for char in string) / len(string)
+
+def quadratic_deviation(string, average_first):
+    # Функция для вычисления квадратичного отклонения среднего веса ASCII-кода символов строки
+    average = average_weight(string)
+    return (average - average_first) ** 2
+
+def task13():
+    print("Решение задачи 13")
+# 11_7. В порядке увеличения разницы между количеством сочетаний «гласная-согласная» и «согласная-гласная» в строке
+def count_vowel_consonant_pairs(string):
+    # Функция для подсчета количества сочетаний "гласная-согласная" и "согласная-гласная" в строке
+    vowels = set("aeiouAEIOU")
+    consonants = set("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ")
+    vowel_consonant_count = 0
+    consonant_vowel_count = 0
+    for i in range(len(string) - 1):
+        if string[i] in vowels and string[i + 1] in consonants:
+            vowel_consonant_count += 1
+        elif string[i] in consonants and string[i + 1] in vowels:
+            consonant_vowel_count += 1
+    return abs(vowel_consonant_count - consonant_vowel_count)
+
+def task14():
+    print("Решение задачи 14")
+# 11_10. В порядке увеличения среднего количества «зеркальных» троек (например, «ada») символов в строке.
+def count_mirror_triplets(string):
+    # Функция для подсчета количества "зеркальных" троек символов в строке
+    count = 0
+    for i in range(len(string) - 2):
+        if string[i:i+3] == string[i:i+3][::-1]:
+            count += 1
+    return count
+
+def task15():
+    print("Решение задачи 15")
+# 15_1. Дан целочисленный массив. Необходимо найти количество элементов, расположенных после последнего максимального
+def count_elements_after_last_max(arr):
+    if not arr:
+        return 0
+
+    max_index = len(arr) - 1
+    max_value = arr[max_index]
+
+    # Находим индекс последнего максимального элемента
+    for i in range(len(arr) - 2, -1, -1):
+        if arr[i] > max_value:
+            max_index = i
+            max_value = arr[i]
+            break
+
+    # Подсчитываем количество элементов после последнего максимального
+    count = len(arr) - max_index - 1
+    return count
+
+def task16():
+    print("Решение задачи 16")
+# 15_13. Дан целочисленный массив. Необходимо разместить элементы, расположенные до минимального, в конце массива
+def move_elements_to_end(arr):
+    if not arr:
+        return arr
+
+    min_index = arr.index(min(arr))
+    arr[:] = arr[min_index + 1:] + arr[:min_index + 1]
+    return arr
+
+def task17():
+    print("Решение задачи 17")
+# 15_25. Дан целочисленный массив и интервал a..b. Необходимо найти максимальный из элементов в этом интервале
+def find_max_in_interval(arr, a, b):
+    # Проверяем, чтобы a и b были в пределах индексов массива
+    if a < 0 or b >= len(arr):
+        return "Индексы выходят за пределы массива"
+
+    # Находим максимальный элемент в интервале a..b
+    max_value = float('-inf')  # Инициализируем переменную максимальным отрицательным значением
+    for i in range(a, b + 1):
+        if arr[i] > max_value:
+            max_value = arr[i]
+    return max_value
+
+def task18():
+    print("Решение задачи 18")
+# 15_37. Дан целочисленный массив. Вывести индексы элементов, которые меньше своего левого соседа, и количество таких чисел
+def find_indexes_less_than_left_neighbour(arr):
+    # Инициализируем список для хранения индексов элементов, которые меньше своего левого соседа
+    indexes = []
+    count = 0
+
+    # Перебираем элементы массива, начиная со второго
+    for i in range(1, len(arr)):
+        # Если текущий элемент меньше своего левого соседа, добавляем его индекс в список
+        if arr[i] < arr[i - 1]:
+            indexes.append(i)
+            count += 1
+
+    return indexes, count
+
+def task19():
+    print("Решение задачи 19")
+# 15_49. Для введенного списка положительных чисел построить список всех положительных простых делителей элементов списка без повторений
+def is_prime(n):
+    # Функция для определения, является ли число простым
+    if n <= 1:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def find_divisors(n):
+    # Функция для нахождения всех положительных делителей числа
+    divisors = []
+    for i in range(1, n + 1):
+        if n % i == 0:
+            divisors.append(i)
+    return divisors
+
+def unique_positive_prime_divisors(numbers):
+    # Функция для построения списка всех положительных простых делителей элементов списка без повторений
+    prime_divisors = set()
+    for number in numbers:
+        for divisor in find_divisors(number):
+            if divisor != 1 and is_prime(divisor):
+                prime_divisors.add(divisor)
+    return list(prime_divisors)
+
+
+#############################################
+choice = int(input("Введите номер задачи: "))
+if choice == 1:
+    print("Найти сумму простых делителей числа")
+    number1 = int(input("Введите число: "))
+    sum_of_prime_factors = prime_factors_sum(number1)
+    print("Сумма простых делителей числа", number1, ":", sum_of_prime_factors)
+    print()
+    print("Найти количество нечетных цифр числа, больших 3")
+    number2 = int(input("Введите число: "))
+    result2 = count_odd_digits_greater_than_3(number2)
+    print("Количество нечётных цифр числа", number2, ", больших 3:", result2)
+    print()
+    print("Найти произведение таких делителей числа, сумма цифр которых меньше, чем сумма цифр исходного числа")
+    number3 = int(input("Введите число: "))
+    result3 = product_of_divisors_less_than_original(number3)
+    print(f"Произведение делителей числа {number3} с суммой цифр, меньше суммы цифр исходного числа: {result3}")
+elif choice == 2:
+    print("Необходимо найти общее количество русских символов")
+    input_text2 = input("Введите текст: ")
+    russian_chars_count = count_russian_chars(input_text2)
+    print("Общее количество русских символов в тексте:", russian_chars_count)
+elif choice == 3:
+    print("Необходимо проверить образуют ли строчные символы латиницы палиндром")
+    input_text3 = input("Введите текст: ")
+    if is_palindrome(input_text3):
+        print("Строчные символы латиницы образуют палиндром.")
+    else:
+        print("Строчные символы латиницы не образуют палиндром.")
+elif choice == 4:
+    print("Найти в тексте даты формата «день.месяц.год»")
+    input_text4 = input("Введите текст: ")
+    found_dates = find_dates(input_text4)
+    if found_dates:
+        print("Найденные даты формата 'день.месяц.год':", found_dates)
+    else:
+        print("В тексте не найдены даты формата 'день.месяц.год'.")
+elif choice == 5:
+    print("Дана строка. Необходимо найти все даты, которые описаны в виде 31 февраля 2007")
+    input_text5 = input("Введите текст: ")
+    found_dates = find_custom_dates(input_text5)
+    if found_dates:
+        print("Найденные даты в формате '31 февраля 2007':", found_dates)
+    else:
+        print("В тексте не найдены даты в формате '31 февраля 2007'.")
+elif choice == 6:
+    print("Дана строка. Необходимо найти максимальное из имеющихся в ней вещественных чисел")
+    input_text6 = input("Введите текст: ")
+    max_float = find_max_float(input_text6)
+    if max_float is not None:
+        print("Максимальное вещественное число в тексте:", max_float)
+    else:
+        print("В тексте нет вещественных чисел.")
+elif choice == 7:
+    print("Дана строка. Необходимо найти минимальное из имеющихся в ней рациональных чисел")
+    input_text7 = input("Введите текст: ")
+    min_rational = find_min_rational(input_text7)
+    if min_rational is not None:
+        print("Минимальное рациональное число в тексте:", min_rational)
+    else:
+        print("В тексте нет рациональных чисел.")
+elif choice == 8:
+    print("Дана строка. Необходимо найти наибольшее количество идущих подряд цифр")
+    input_text8 = input("Введите текст: ")
+    max_count = max_consecutive_digits(input_text8)
+    print("Наибольшее количество идущих подряд цифр в тексте:", max_count)
+elif choice == 9:
+    print("Прочитать список строк с клавиатуры. Упорядочить по длине строки")
+    # Чтение списка строк с клавиатуры
+    n9 = int(input("Введите количество строк: "))
+    string_list = []
+    for i in range(n9):
+        string = input("Введите строку: ")
+        string_list.append(string)
+    # Упорядочивание списка по длине строки
+    sorted_strings = sort_by_length(string_list)
+    print("Отсортированный список строк по длине:")
+    for string in sorted_strings:
+        print(string)
+elif choice == 10:
+    print("Дан список строк с клавиатуры. Упорядочить по количеству слов в строке")
+    # Чтение списка строк с клавиатуры
+    n10 = int(input("Введите количество строк: "))
+    string_list = []
+    for i in range(n10):
+        string = input("Введите строку: ")
+        string_list.append(string)
+    # Упорядочивание списка по количеству слов в строке
+    sorted_strings = sort_by_word_count(string_list)
+    # Вывод отсортированного списка
+    print("Отсортированный список строк по количеству слов:")
+    for string in sorted_strings:
+        print(string)
+elif choice == 11:
+    print("Отсортировать строки в указанном порядке:")
+    print("В порядке увеличения разницы между количеством согласных и количеством гласных букв в строке")
+    # Чтение списка строк с клавиатуры
+    n11 = int(input("Введите количество строк: "))
+    string_list = []
+    for i in range(n11):
+        string = input("Введите строку: ")
+        string_list.append(string)
+    # Сортировка списка строк по разнице между количеством согласных и гласных букв
+    sorted_strings = sorted(string_list, key=count_vowels_consonants)
+    # Вывод отсортированного списка
+    print("Отсортированный список строк в порядке увеличения разницы между количеством согласных и гласных букв:")
+    for string in sorted_strings:
+        print(string)
+elif choice == 12:
+    print("Отсортировать строки в указанном порядке:")
+    print("В порядке увеличения квадратичного отклонения среднего веса ASCII-кода символа строки от среднего веса ASCII-кода символа первой строки")
+    # Чтение списка строк с клавиатуры
+    n12 = int(input("Введите количество строк: "))
+    string_list = []
+    for i in range(n12):
+        string = input("Введите строку: ")
+        string_list.append(string)
+    # Вычисление среднего веса ASCII-кода символов первой строки
+    average_first_string = average_weight(string_list[0])
+    # Сортировка списка строк по квадратичному отклонению от среднего веса ASCII-кода символов первой строки
+    sorted_strings = sorted(string_list, key=lambda x: quadratic_deviation(x, average_first_string))
+    # Вывод отсортированного списка
+    print(
+        "Отсортированный список строк в порядке увеличения квадратичного отклонения среднего веса ASCII-кода символов строки от среднего веса ASCII-кода символов первой строки:")
+    for string in sorted_strings:
+        print(string)
+elif choice == 13:
+    print("Отсортировать строки в указанном порядке:")
+    print("В порядке увеличения разницы между количеством сочетаний «гласная-согласная» и «согласная-гласная» в строке")
+    # Чтение списка строк с клавиатуры
+    n13 = int(input("Введите количество строк: "))
+    string_list = []
+    for i in range(n13):
+        string = input("Введите строку: ")
+        string_list.append(string)
+    # Сортировка списка строк по разнице между количеством сочетаний "гласная-согласная" и "согласная-гласная"
+    sorted_strings = sorted(string_list, key=count_vowel_consonant_pairs)
+    # Вывод отсортированного списка
+    print(
+        "Отсортированный список строк в порядке увеличения разницы между количеством сочетаний 'гласная-согласная' и 'согласная-гласная':")
+    for string in sorted_strings:
+        print(string)
+elif choice == 14:
+    print("Отсортировать строки в указанном порядке:")
+    print("В порядке увеличения среднего количества «зеркальных» троек (например, «ada») символов в строке.")
+    # Чтение списка строк с клавиатуры
+    n14 = int(input("Введите количество строк: "))
+    string_list = []
+    for i in range(n14):
+        string = input("Введите строку: ")
+        string_list.append(string)
+    # Сортировка списка строк по среднему количеству "зеркальных" троек символов
+    sorted_strings = sorted(string_list, key=lambda x: count_mirror_triplets(x))
+    # Вывод отсортированного списка
+    print("Отсортированный список строк в порядке увеличения среднего количества 'зеркальных' троек символов:")
+    for string in sorted_strings:
+        print(string)
+elif choice == 15:
+    print("Дан целочисленный массив. Необходимо найти количество элементов, расположенных после последнего максимального.")
+    arr = [int(x) for x in input("Введите целочисленный массив через пробел: ").split()]
+    count = count_elements_after_last_max(arr)
+    print("Количество элементов после последнего максимального:", count)
+elif choice == 16:
+    print("Дан целочисленный массив. Необходимо разместить элементы, расположенные до минимального, в конце массива")
+    arr = [int(x) for x in input("Введите целочисленный массив через пробел: ").split()]
+    result = move_elements_to_end(arr)
+    print("Массив после перемещения элементов перед минимальным в конец:", result)
+elif choice == 17:
+    print("Дан целочисленный массив и интервал a..b. Необходимо найти максимальный из элементов в этом интервале")
+    arr = [int(x) for x in input("Введите целочисленный массив через пробел: ").split()]
+    a = int(input("Введите начало интервала: "))
+    b = int(input("Введите конец интервала: "))
+    max_value = find_max_in_interval(arr, a, b)
+    print("Максимальный элемент в интервале [{}, {}]: {}".format(a, b, max_value))
+elif choice == 18:
+    print("Дан целочисленный массив. Вывести индексы элементов, которые меньше своего левого соседа, и количество таких чисел")
+    arr = [int(x) for x in input("Введите целочисленный массив через пробел: ").split()]
+    indexes, count = find_indexes_less_than_left_neighbour(arr)
+    if count > 0:
+        print("Индексы элементов, которые меньше своего левого соседа:", indexes)
+        print("Количество таких чисел:", count)
+    else:
+        print("В массиве нет элементов, которые меньше своего левого соседа")
+elif choice == 19:
+    print("Для введенного списка положительных чисел построить список всех положительных простых делителей элементов списка без повторений")
+    numbers = [int(x) for x in input("Введите список положительных чисел через пробел: ").split()]
+    prime_divisors = unique_positive_prime_divisors(numbers)
+    print("Список всех положительных простых делителей элементов списка без повторений:", prime_divisors)
+else:
+    print("Такой задачи нет")
