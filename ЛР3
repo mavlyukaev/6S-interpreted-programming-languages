@@ -1,3 +1,15 @@
+# Задание 1 Написать программу, демонстрирующую работу с объектами
+# двух типов T1 и T2, для чего создать систему соответствующих классов.
+# Каждый объект должен иметь идентификатор (в виде произвольной строки
+# символов) и одно или несколько полей для хранения состояния (текущего
+# значения) объекта.
+
+# Перечень типов объектов: Прямоугольник (Rectangle, Пятиугольник(Tetragon),
+# Перечень дополнительных методов:
+# - compare(T1 t1, T2 t2) сравнение объектов по площади;
+# - is_include(T1 t1, T2 t2) определяет факт включения.
+def task1():
+    print("Решение задачи 1")
 class Rectangle:
     def __init__(self, width, height):
         self.width = width
@@ -11,7 +23,6 @@ def is_include(rectangle, pentagon):
     # Проверяем, содержит ли прямоугольник в себе пятиугольник
     rectangle_area = rectangle.width * rectangle.height
     pentagon_area = 1.720 * pentagon.side_length ** 2
-
     return pentagon_area <= rectangle_area
 
 def compare(rectangle, pentagon):
@@ -26,10 +37,70 @@ def compare(rectangle, pentagon):
     else:
         return "Площади прямоугольника и пятиугольника равны"
 
-
 # Значение сторон фигур
-rectangle = Rectangle(5, 0.5)
-pentagon = Pentagon(2.5)
+rectangle = Rectangle(5, 10)
+pentagon = Pentagon(2)
 
-print(is_include(rectangle, pentagon))
-print(compare(rectangle, pentagon))
+
+# Задание 2. Необходимо предусмотреть генерацию и обработку исключений для возможных ошибочных ситуаций
+def task2():
+    print("Решение задачи 2")
+class Rectangle:
+    def __init__(self, width, height):
+        if width <= 0 or height <= 0:
+            raise ValueError("Ширина и высота прямоугольника должны быть положительными числами.")
+        self.width = width
+        self.height = height
+
+class Pentagon:
+    def __init__(self, side_length):
+        if side_length <= 0:
+            raise ValueError("Длина стороны пятиугольника должна быть положительным числом.")
+        self.side_length = side_length
+
+def is_include(rectangle, pentagon):
+    try:
+        # Проверяем, содержит ли прямоугольник в себе пятиугольник
+        rectangle_area = rectangle.width * rectangle.height
+        pentagon_area = 1.720 * pentagon.side_length ** 2
+        return pentagon_area <= rectangle_area
+    except Exception as e:
+        print("Ошибка при проверке включения пятиугольника в прямоугольник:", e)
+        return False
+
+def compare(rectangle, pentagon):
+    try:
+        # Сравниваем площади прямоугольника и пятиугольника
+        rectangle_area = rectangle.width * rectangle.height
+        pentagon_area = 1.720 * pentagon.side_length ** 2
+
+        if rectangle_area > pentagon_area:
+            return "Прямоугольник больше пятиугольника"
+        elif rectangle_area < pentagon_area:
+            return "Пятиугольник больше прямоугольника"
+        else:
+            return "Площади прямоугольника и пятиугольника равны"
+    except Exception as e:
+        print("Ошибка при сравнении площадей фигур:", e)
+        return "Невозможно выполнить сравнение"
+
+
+
+choice = int(input("Введите номер задачи: "))
+if choice == 1:
+    print(is_include(rectangle, pentagon))
+    print(compare(rectangle, pentagon))
+elif choice == 2:
+    try:
+        # Значение сторон фигур
+        rectangle = Rectangle(5, 10)
+        pentagon = Pentagon(-2)
+
+        print(compare(rectangle, pentagon))
+        print(is_include(rectangle, pentagon))
+    except ValueError as ve:
+        print("Ошибка:", ve)
+    except Exception as e:
+        print("Произошла ошибка:", e)
+else:
+    print("Такой задачи нет")
