@@ -1,0 +1,22 @@
+# Вариант 3 Реализовать функцию, которая будет проверять, является ли
+# введенная строка телефонным номером, возвращаемое значение true или
+# False. Дополнительно реализовать функцию, которая выбрасывает исключение
+# о некорректном аргументе, иначе возвращает телефонный номер.
+import re
+def is_valid_phone_number(phone_number):
+    # Паттерн для поиска телефонного номера: +7 (XXX) XXX-XX-XX
+    pattern = r'^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$'
+    return re.match(pattern, phone_number) is not None
+
+def validate_phone_number(phone_number):
+    if not is_valid_phone_number(phone_number):
+        raise ValueError("Некорректный формат телефонного номера")
+    return phone_number
+
+# Пример использования
+try:
+    phone_number = "+7 (123) 456-78-90"
+    print(phone_number)
+    print(is_valid_phone_number(phone_number))
+except ValueError as e:
+    print("Ошибка:", e)
