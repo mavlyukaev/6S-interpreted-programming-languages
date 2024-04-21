@@ -1,0 +1,35 @@
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+class Pentagon:
+    def __init__(self, side_length):
+        self.side_length = side_length
+
+def is_include(rectangle, pentagon):
+    # Проверяем, содержит ли прямоугольник в себе пятиугольник
+    rectangle_area = rectangle.width * rectangle.height
+    pentagon_area = 1.720 * pentagon.side_length ** 2
+
+    return pentagon_area <= rectangle_area
+
+def compare(rectangle, pentagon):
+    # Сравниваем площади прямоугольника и пятиугольника
+    rectangle_area = rectangle.width * rectangle.height
+    pentagon_area = 1.720 * pentagon.side_length ** 2
+
+    if rectangle_area > pentagon_area:
+        return "Прямоугольник больше пятиугольника"
+    elif rectangle_area < pentagon_area:
+        return "Пятиугольник больше прямоугольника"
+    else:
+        return "Площади прямоугольника и пятиугольника равны"
+
+
+# Значение сторон фигур
+rectangle = Rectangle(5, 0.5)
+pentagon = Pentagon(2.5)
+
+print(is_include(rectangle, pentagon))
+print(compare(rectangle, pentagon))
