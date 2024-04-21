@@ -19,13 +19,13 @@ def find_max_product(N, K, data):
                 if data[k] - data[i] >= K and data[j] - data[i] >= K and data[k] - data[j] >= K:
                     product = data[i] * data[j] * data[k]
                     max_product = max(max_product, product)
-
     return max_product % (pow(10,6)+ 1)
 
 f = open("C:/Users/mavly/pycharm/pythonProject/27-168a.txt")
 N, K = map(int, f.readline().split())
 A = [int(f.readline()) for i in range (N)]
-#print(find_max_product(N, K, A))
+
+
 
 # Вариант 13 Текстовый файл содержит запись многочлена некоторой
 # степени с одной переменной х, коэффициенты многочлена – целые. Например,
@@ -52,7 +52,6 @@ def degree_and_coefficients(polynomial):
         coefficient = int(match[0] or '0')
         power = int(match[1] or '0')
         coefficients[power] = coefficient
-
     return degree, coefficients
 
 def evaluate_polynomial(polynomial, a, b):
@@ -65,7 +64,6 @@ def evaluate_polynomial(polynomial, a, b):
         for i in range(degree + 1):
             value += coefficients[i] * (x ** i)
         values.append(value)
-
     return values
 
 def write_values_to_file(file_name, values):
@@ -80,9 +78,6 @@ b = 5
 
 polynomial = read_polynomial(file_name)
 degree, coefficients = degree_and_coefficients(polynomial)
-# print("Степень многочлена:", degree)
-# print("Коэффициенты многочлена:", coefficients)
-
 values = evaluate_polynomial(polynomial, a, b)
 write_values_to_file(file_name, values)
 
