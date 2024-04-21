@@ -1,0 +1,98 @@
+# Вариант 3 ЕГЭ-2023.
+# По каналу связи передаётся последовательность целых чисел - показания
+# прибора. В течение N минут (N – натуральное число) прибор ежеминутно
+# регистрирует значение силы тока (в условных единицах) в электрической сети
+# и передаёт его на сервер. Определите три таких переданных числа, чтобы
+# между моментами передачи любых двух из них прошло не менее К минут, а
+# произведение этих чисел было максимально возможным. Запишите в ответе
+# остаток от деления найденного произведения на 106 + 1
+def task1():
+    print("Решение задачи 1")
+def find_max_product(N, K, data):
+    data.sort()
+    max_product = 0
+
+    for i in range(N - 2):
+        for j in range(i + 1, N - 1):
+            for k in range(j + 1, N):
+                # Проверяем условие минимального временного интервала между значениями
+                if data[k] - data[i] >= K and data[j] - data[i] >= K and data[k] - data[j] >= K:
+                    product = data[i] * data[j] * data[k]
+                    max_product = max(max_product, product)
+
+    return max_product % (pow(10,6)+ 1)
+
+f = open("C:/Users/mavly/pycharm/pythonProject/27-168a.txt")
+N, K = map(int, f.readline().split())
+A = [int(f.readline()) for i in range (N)]
+#print(find_max_product(N, K, A))
+
+# Вариант 13 Текстовый файл содержит запись многочлена некоторой
+# степени с одной переменной х, коэффициенты многочлена – целые. Например,
+# 5х^4-3 х^3+15х^2-4. Указать степень многочлена, его коэффициенты. Дописать
+# в указанный файл таблицу значений этого многочлена на данном отрезке [а, b].
+def task2():
+    print("Решение задачи 2")
+def read_polynomial(file_name):
+    with open(file_name, 'r') as file:
+        polynomial = file.readline().strip()  # Считываем запись многочлена из файла
+    return polynomial
+
+import re
+def degree_and_coefficients(polynomial):
+    # Используем регулярное выражение для поиска коэффициентов и степени
+    matches = re.findall(r'(-?\d+)\s*x\^(\d+)|(-?\d+)\s*x|(-?\d+)', polynomial)
+
+    # Определяем степень многочлена
+    degree = max(int(match[1] or '0') for match in matches)
+
+    # Извлекаем коэффициенты
+    coefficients = [0] * (degree + 1)
+    for match in matches:
+        coefficient = int(match[0] or '0')
+        power = int(match[1] or '0')
+        coefficients[power] = coefficient
+
+    return degree, coefficients
+
+def evaluate_polynomial(polynomial, a, b):
+    degree, coefficients = degree_and_coefficients(polynomial)
+    values = []
+
+    # Вычисляем значения многочлена на отрезке [a, b]
+    for x in range(a, b + 1):
+        value = 0
+        for i in range(degree + 1):
+            value += coefficients[i] * (x ** i)
+        values.append(value)
+
+    return values
+
+def write_values_to_file(file_name, values):
+    with open(file_name, 'a') as file:  # Открываем файл для дописывания
+        file.write("\n")  # Добавляем пустую строку перед записью значений
+        for value in values:
+            file.write(str(value) + "\n")  # Записываем каждое значение на новой строке
+
+file_name = "polynomial.txt"
+a = 1
+b = 5
+
+polynomial = read_polynomial(file_name)
+degree, coefficients = degree_and_coefficients(polynomial)
+# print("Степень многочлена:", degree)
+# print("Коэффициенты многочлена:", coefficients)
+
+values = evaluate_polynomial(polynomial, a, b)
+write_values_to_file(file_name, values)
+
+
+
+choice = int(input("Введите номер задачи: "))
+if choice == 1:
+    print(find_max_product(N, K, A))
+elif choice == 2:
+    print("Степень многочлена:", degree)
+    print("Коэффициенты многочлена:", coefficients)
+else:
+    print("Такой задачи нет")
