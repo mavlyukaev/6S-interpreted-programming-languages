@@ -1,6 +1,4 @@
 # Вариант 3. Пересечение множеств
-def task1():
-    print("Решение задачи 1")
 def find_common_elements(list1, list2):
     return sorted(set(list1) & set(list2))
 
@@ -13,50 +11,63 @@ result1 = find_common_elements(list1, list2)
 
 
 # Вариант 13. Родословная: LCA
-def task2():
-    print("Решение задачи 2")
-class TreeNode:
-    def __init__(self, val=0):
-        self.val = val
-        self.left = None
-        self.right = None
+def find_lca(tree, node1, node2):
+    def find_path(node, target):
+        path = [node]
+        while node != target:
+            found = False
+            for parent, children in tree.items():
+                if node in children:
+                    path.append(parent)
+                    node = parent
+                    found = True
+                    break
+            if not found:
+                break
+        return path
 
-def lowest_common_ancestor(root, p, q):
-    if not root or root == p or root == q:
-        return root
+    path1 = find_path(node1, node2)
+    path2 = find_path(node2, node1)
 
-    left = lowest_common_ancestor(root.left, p, q)
-    right = lowest_common_ancestor(root.right, p, q)
+    if not path1 or not path2:
+        return "Один из узлов не найден в генеалогическом древе."
 
-    if left and right:
-        return root
-    return left if left else right
+    lca = None
+    for ancestor1, ancestor2 in zip(path1[::-1], path2[::-1]):
+        if ancestor1 == ancestor2:
+            lca = ancestor1
+        else:
+            break
 
-# Создаем генеалогическое древо
-root = TreeNode("Фрукты")
-root.left = TreeNode("Цитрусы")
-root.right = TreeNode("Ягода")
-root.left.left = TreeNode("Апельсин")
-root.left.right = TreeNode("Лимон")
-root.right.left = TreeNode("Клубника")
-root.right.right = TreeNode("Арбуз")
-root.left.right.left = TreeNode("Спелый лимон")
-root.left.right.right = TreeNode("Зеленый лимон")
-root.right.right.left = TreeNode("Красный арбуз")
-root.right.right.right = TreeNode("Желтый арбуз")
+    return lca
 
-#Выбираем элементы для которых необходимо найти общего предка
-p = root.right.right
-q = root.right.right.right
+# Функция для ввода генеалогического древа с клавиатуры
+def input_genealogy_tree():
+    print("Введите генеалогическое древо:")
+    tree = {}
+    while True:
+        line = input().strip()
+        if not line:
+            break
+        parent, *children = line.split()
+        tree[parent] = children
+        # Добавляем всех детей в древо
+        for child in children:
+            tree[child] = []
+    return tree
 
-result2 = lowest_common_ancestor(root, p, q)
+# Пример использования
+genealogy_tree = input_genealogy_tree()
 
-
-
-choice = int(input("Введите номер задачи: "))
-if choice == 1:
-    print(result1)
-elif choice == 2:
-    print("Наименьший общий предок для {} и {}: {}".format(p.val, q.val, result2.val))
-else:
-    print("Такой задачи нет")
+while True:
+    print("Узлы в генеалогическом древе:", genealogy_tree.keys())
+    node1, node2 = input("Введите два узла для поиска их наименьшего общего предка: ").split()
+    all_nodes = set(node for nodes in genealogy_tree.values() for node in nodes) | set(genealogy_tree.keys())
+    if node1 not in all_nodes or node2 not in all_nodes:
+        print("Один из узлов не найден в генеалогическом древе.")
+        continue
+    lca = find_lca(genealogy_tree, node1, node2)
+    print("Наименьший общий предок для узлов {} и {}: {}".format(node1, node2, lca))
+    choice = input("Продолжить? (Да/Нет): ").strip().lower()
+    if choice != 'да':
+        break
