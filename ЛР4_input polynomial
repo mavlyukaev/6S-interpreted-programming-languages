@@ -1,1 +1,11 @@
 "5x^4 - 3x^3 + 15x^2 - 4"
+
+
+Traceback (most recent call last):
+  File "Z:\Python\python4\pythonProject4\main.py", line 79, in <module>
+    polynomial = read_polynomial(file_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\Python\python4\pythonProject4\main.py", line 37, in read_polynomial
+    with open(file_name, 'r') as file:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'polynomial.txt'
